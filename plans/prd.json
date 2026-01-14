@@ -79,5 +79,36 @@
       "Implement e2e test that checks the behaviour - basically sending something like Hi and expecting some agent response"
     ],
     "passes": true
+  },
+  {
+    "id": "bug-001",
+    "category": "bug",
+    "title": "Error handling for failed agent response is not handled properly.",
+    "description": "Now instead of seeing the right error message, it always shows 'Error: Failed to get response from agent'",
+    "steps": [
+      "Add proper error handling for failed agent response",
+      "Show the right error message, based on what exception is saying",
+      "Create a test that checks the error handling for failed agent response"
+    ],
+    "passes": false
+  },
+  {
+    "id": "bug-002",
+    "category": "bug",
+    "title": "URL construction for agent is not correct",
+    "description": "It tries to open agent card with wrong URL, it does not include agent ID.",
+    "steps": [
+      "Use correct URL for agent card, that is http://localhost:5173/api/v1/a2a/2158c059-e10a-4c85-aece-a33c15e52fd6/.well-known/agent-card.json",
+      "Create test that ensure agent card is loaded correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "bug-003",
+    "category": "bug",
+    "title": "Metadata does not seem to be passed properly. They are send on whole message, they should be on the message itself.",
+    "description": "Metadata are send on whole message, they should be on the message itself.",
+    "steps": ["Pass metadata on the message itself, not on the whole message"],
+    "passes": false
   }
 ]
