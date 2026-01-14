@@ -119,10 +119,10 @@
     "steps": [
       "Add prettier config",
       "Setup prettier to format the code",
-      "Make sure eslint fails when code is not formatted with prettier",.
+      "Make sure eslint fails when code is not formatted with prettier",
       "Add fix script in pnpm to format the code"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "chore-006",

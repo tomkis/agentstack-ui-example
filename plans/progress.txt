@@ -97,3 +97,15 @@
   - Playwright `page.route()` can intercept and mock API responses for error testing
   - Test verifies error message is displayed and is NOT the hardcoded generic message
 ---
+
+## 2026-01-14 - chore-005
+- What was implemented: Prettier config with ESLint integration, pnpm fix script
+- Files changed: .prettierrc (new), .prettierignore (new), eslint.config.js, package.json
+- **Learnings:**
+  - `eslint-plugin-prettier` runs prettier as ESLint rule via `prettier/prettier: error`
+  - `eslint-config-prettier` disables ESLint rules that conflict with Prettier (add last in config)
+  - ESLint 9 flat config imports plugins as default exports, not named
+  - `.prettierignore` needed to skip dist, node_modules, pnpm-lock.yaml
+  - Prettier config: semi, singleQuote, tabWidth:2, trailingComma:es5
+  - Fixed syntax error in prd.json (stray comma after string)
+---
