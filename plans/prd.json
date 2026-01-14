@@ -10,7 +10,7 @@
       "Update local CLAUDE.md with improtant bits related to how to use SDK in the project",
       "Focus on LLM extensions, context tokens and basic chat functionality"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "chore-002",

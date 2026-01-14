@@ -1,0 +1,12 @@
+## 2026-01-14 - chore-001
+- What was implemented: Added AgentStack SDK reference documentation to CLAUDE.md
+- Files changed: .claude/CLAUDE.md
+- **Learnings:**
+  - SDK package is `agentstack-sdk` (not @agentstack/sdk), depends on `@a2a-js/sdk`
+  - Core functions: `buildApiClient`, `handleAgentCard`, `buildLLMExtensionFulfillmentResolver`
+  - A2A client uses `ClientFactory.createFromUrl()` for agent connection
+  - Streaming via `sendMessageStream()` returns async iterator with status-update/artifact-update events
+  - Extension pattern: agent declares demands in card, client fulfills via dependency injection
+  - Context token grants permissions for LLM, files, A2A proxy access
+  - AgentStack runs on port 8334 by default, A2A endpoint at `/api/v1/a2a/AGENT_ID`
+---
