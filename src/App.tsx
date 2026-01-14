@@ -1,17 +1,17 @@
-import { useState, useRef, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
-import { sendMessage } from '@/services/agent'
+import { useState, useRef, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { sendMessage } from '@/services/agent';
 
 interface Message {
-  id: string
-  role: 'user' | 'agent'
-  content: string
+  id: string;
+  role: 'user' | 'agent';
+  content: string;
 }
 
 function ChatBubble({ message }: { message: Message }) {
-  const isUser = message.role === 'user'
+  const isUser = message.role === 'user';
   return (
     <div
       className={cn('flex', isUser ? 'justify-end' : 'justify-start')}
@@ -28,70 +28,68 @@ function ChatBubble({ message }: { message: Message }) {
         {message.content}
       </div>
     </div>
-  )
+  );
 }
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [inputValue, setInputValue] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSend = async () => {
-    if (!inputValue.trim() || isLoading) return
+    if (!inputValue.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
-      content: inputValue.trim()
-    }
-    setMessages(prev => [...prev, userMessage])
-    setInputValue('')
-    setIsLoading(true)
+      content: inputValue.trim(),
+    };
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue('');
+    setIsLoading(true);
 
-    const agentMessageId = crypto.randomUUID()
-    setMessages(prev => [
+    const agentMessageId = crypto.randomUUID();
+    setMessages((prev) => [
       ...prev,
-      { id: agentMessageId, role: 'agent', content: '' }
-    ])
+      { id: agentMessageId, role: 'agent', content: '' },
+    ]);
 
     try {
       for await (const event of sendMessage(userMessage.content)) {
         if (event.type === 'text') {
-          setMessages(prev =>
-            prev.map(m =>
-              m.id === agentMessageId
-                ? { ...m, content: event.text }
-                : m
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === agentMessageId ? { ...m, content: event.text } : m
             )
-          )
+          );
         }
       }
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error occurred'
-      setMessages(prev =>
-        prev.map(m =>
+        error instanceof Error ? error.message : 'Unknown error occurred';
+      setMessages((prev) =>
+        prev.map((m) =>
           m.id === agentMessageId
             ? { ...m, content: `Error: ${errorMessage}` }
             : m
         )
-      )
+      );
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSend()
+      e.preventDefault();
+      handleSend();
     }
-  }
+  };
 
   return (
     <div className="flex h-screen flex-col">
@@ -100,7 +98,7 @@ function App() {
       </header>
       <main className="flex-1 overflow-y-auto p-4">
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          {messages.map(message => (
+          {messages.map((message) => (
             <ChatBubble key={message.id} message={message} />
           ))}
           <div ref={messagesEndRef} />
@@ -111,7 +109,7 @@ function App() {
           <Input
             placeholder="Type a message..."
             value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isLoading}
             data-testid="chat-input"
@@ -126,7 +124,7 @@ function App() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
