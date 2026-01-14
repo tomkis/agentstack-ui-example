@@ -135,5 +135,16 @@
       "It's ok to fail the test, we'll fix it later."
     ],
     "passes": true
+  },
+  {
+    "id": "bug-004",
+    "category": "bug",
+    "title": "Fix: Failed to construct 'URL': Invalid base URL",
+    "description": "The server URL should be window.location.origin instead of hardcoded /api",
+    "steps": [
+      "Use window.location.origin instead of hardcoded /api",
+      "Fix the e2e smoke test"
+    ],
+    "passes": true
   }
 ]
