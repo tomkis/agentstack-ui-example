@@ -68,3 +68,13 @@
   - Response text comes from either artifact-update events or final message
   - E2E test needs longer timeout (30s) for agent response
 ---
+
+## 2026-01-14 - bug-002
+- What was implemented: Fixed agent URL to use correct UUID instead of 'chat'
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - Agent ID must be the actual UUID (2158c059-e10a-4c85-aece-a33c15e52fd6), not a placeholder
+  - Module-level singleton caching in agent.ts persists across Playwright tests when reuseExistingServer=true
+  - Cannot easily test network interception for cached requests in parallel tests
+  - Existing "agent responds to message" test validates URL correctness (agent wouldn't respond with wrong URL)
+---

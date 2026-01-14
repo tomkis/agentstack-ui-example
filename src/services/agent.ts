@@ -8,7 +8,7 @@ import { ClientFactory, type Client } from '@a2a-js/sdk/client'
 import type { Message, TaskArtifactUpdateEvent } from '@a2a-js/sdk'
 
 const API_BASE_URL = '/api'
-const CHAT_AGENT_ID = 'chat'
+const CHAT_AGENT_ID = '2158c059-e10a-4c85-aece-a33c15e52fd6'
 
 interface AgentSetup {
   client: Client

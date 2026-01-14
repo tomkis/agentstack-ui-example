@@ -29,3 +29,4 @@ test('agent responds to message', async ({ page }) => {
   const agentBubble = page.getByTestId('chat-bubble-agent');
   await expect(agentBubble).not.toBeEmpty({ timeout: 30000 });
 });
+

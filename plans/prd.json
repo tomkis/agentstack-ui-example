@@ -101,7 +101,7 @@
       "Use correct URL for agent card, that is http://localhost:5173/api/v1/a2a/2158c059-e10a-4c85-aece-a33c15e52fd6/.well-known/agent-card.json",
       "Create test that ensure agent card is loaded correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "bug-003",
