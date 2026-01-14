@@ -139,3 +139,13 @@
   - The `TaskStatusUpdateEvent` type has nested structure: `event.status.message.parts[]`
   - All 6 E2E tests now pass including "agent responds to message" and error detection tests
 ---
+
+## 2026-01-14 - bug-007
+- What was implemented: Added context ID to A2A message for proper agent workspace association
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - A2A Message interface has `contextId` property that must be set for agent to access context resources
+  - Context is created via `api.createContext(agentId)` and returns object with `id` property
+  - The `contextId` connects message to the workspace where token permissions apply
+  - AgentSetup interface extended to cache contextId alongside client and metadata
+---

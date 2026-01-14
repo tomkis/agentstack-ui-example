@@ -20,6 +20,7 @@ function getApiBaseUrl(): string {
 interface AgentSetup {
   client: Client;
   metadata: Record<string, unknown>;
+  contextId: string;
 }
 
 let agentSetup: AgentSetup | null = null;
@@ -56,7 +57,7 @@ export async function initializeAgent(): Promise<AgentSetup> {
 
   const metadata = await resolveMetadata(fulfillments as Fulfillments);
 
-  agentSetup = { client, metadata };
+  agentSetup = { client, metadata, contextId: context.id };
   return agentSetup;
 }
 
@@ -90,13 +91,14 @@ function isStatusUpdate(event: unknown): event is TaskStatusUpdateEvent {
 export async function* sendMessage(
   content: string
 ): AsyncGenerator<{ type: 'text'; text: string } | { type: 'done' }> {
-  const { client, metadata } = await initializeAgent();
+  const { client, metadata, contextId } = await initializeAgent();
 
   const message: Message = {
     messageId: crypto.randomUUID(),
     role: 'user',
     parts: [{ kind: 'text', text: content }],
     kind: 'message',
+    contextId,
     metadata,
   };
 
