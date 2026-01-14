@@ -41,7 +41,11 @@ export async function initializeAgent(): Promise<AgentSetup> {
   const { token } = await api.createContextToken({
     contextId: context.id,
     globalPermissions: { llm: ['*'], a2a_proxy: ['*'] },
-    contextPermissions: { files: ['*'], vector_stores: ['*'] },
+    contextPermissions: {
+      files: ['*'],
+      vector_stores: ['*'],
+      context_data: ['*'],
+    },
   });
 
   const { resolveMetadata, demands } = handleAgentCard(agentCard);
