@@ -122,7 +122,7 @@
       "Make sure eslint fails when code is not formatted with prettier",.
       "Add fix script in pnpm to format the code"
     ],
-    "passes": true
+    "passes": false
   },
   {
     "id": "chore-006",
