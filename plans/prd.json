@@ -157,5 +157,25 @@
       "Ensure that kind status-update is handled correctly"
     ],
     "passes": true
+  },
+  {
+    "id": "bug-007",
+    "category": "bug",
+    "title": "Content ID is not passed to message",
+    "description": "Creating the context provides its id and this has to be passed to A2A message",
+    "steps": ["Pass the context ID to the sendMessage function"],
+    "passes": false
+  },
+  {
+    "id": "bug-006",
+    "category": "bug",
+    "title": "Streamed content is not concatenated properly",
+    "description": "Streaming content from the agent is not being concatenated, it just replaces the previous content.",
+    "steps": [
+      "Create accumulator for the streamed content",
+      "Concatenate the streamed content properly",
+      "Render accumulated content as it is streamed"
+    ],
+    "passes": false
   }
 ]
