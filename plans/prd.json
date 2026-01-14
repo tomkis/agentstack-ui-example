@@ -128,10 +128,11 @@
     "id": "chore-006",
     "category": "chore",
     "title": "Add E2E test that would test that agent didnt respond with error",
-    "description": "The test should send a message and expect that agent responds with message that does not start with specific prefix that is used for handling errors in the code",
+    "description": "The test should send a message and expect that agent responds with message that does not start with specific prefix that is used for handling errors in the code. The test is suppose to fail, we'll fix it later.",
     "steps": [
       "Catching error in sending message should append error message with specific prefix format to easily check in test",
-      "Create new E2E test that would test that agent didnt respond with error"
+      "Create new E2E test that would test that agent didnt respond with error",
+      "It's ok to fail the test, we'll fix it later."
     ],
     "passes": false
   }
