@@ -20,3 +20,13 @@
   - Build script: `tsc && vite build` for type checking before build
   - App.tsx displays Hello World as placeholder for future chat UI
 ---
+
+## 2026-01-14 - chore-003
+- What was implemented: ESLint setup with React/TS plugins, pnpm check script
+- Files changed: eslint.config.js, package.json
+- **Learnings:**
+  - ESLint 9 uses flat config (eslint.config.js)
+  - typescript-eslint provides tseslint.config() helper for composing configs
+  - Scripts: `typecheck` (tsc --noEmit), `lint` (eslint .), `check` (both)
+  - Plugins: react-hooks, react-refresh for React best practices
+---

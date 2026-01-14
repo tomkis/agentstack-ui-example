@@ -35,7 +35,7 @@
       "Add typing errors check",
       "Add pnpm check script to verify the project is fully functional - both typing and linting"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "chore-004",
