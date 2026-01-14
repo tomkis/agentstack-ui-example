@@ -78,3 +78,13 @@
   - Cannot easily test network interception for cached requests in parallel tests
   - Existing "agent responds to message" test validates URL correctness (agent wouldn't respond with wrong URL)
 ---
+
+## 2026-01-14 - bug-003
+- What was implemented: Fixed metadata passing - moved from sendMessageStream params to Message object
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - A2A Message interface has `metadata` property directly on the message object
+  - `sendMessageStream({ message, metadata })` is wrong - metadata must be in `message.metadata`
+  - Correct: `sendMessageStream({ message })` where message includes `metadata` property
+  - Existing e2e test validates correct metadata passing (agent needs LLM extension to respond)
+---

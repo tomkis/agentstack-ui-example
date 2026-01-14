@@ -78,10 +78,11 @@ export async function* sendMessage(
     messageId: crypto.randomUUID(),
     role: 'user',
     parts: [{ kind: 'text', text: content }],
-    kind: 'message'
+    kind: 'message',
+    metadata
   }
 
-  const stream = client.sendMessageStream({ message, metadata })
+  const stream = client.sendMessageStream({ message })
 
   for await (const event of stream) {
     if (isArtifactUpdate(event) && event.artifact?.parts) {

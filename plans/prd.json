@@ -109,6 +109,6 @@
     "title": "Metadata does not seem to be passed properly. They are send on whole message, they should be on the message itself.",
     "description": "Metadata are send on whole message, they should be on the message itself.",
     "steps": ["Pass metadata on the message itself, not on the whole message"],
-    "passes": false
+    "passes": true
   }
 ]
