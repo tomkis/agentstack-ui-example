@@ -88,3 +88,12 @@
   - Correct: `sendMessageStream({ message })` where message includes `metadata` property
   - Existing e2e test validates correct metadata passing (agent needs LLM extension to respond)
 ---
+
+## 2026-01-14 - bug-001
+- What was implemented: Fixed error handling to display actual error message instead of generic one
+- Files changed: src/App.tsx, e2e/smoke.spec.ts
+- **Learnings:**
+  - Catch clause should capture error variable and extract message from Error instance
+  - Playwright `page.route()` can intercept and mock API responses for error testing
+  - Test verifies error message is displayed and is NOT the hardcoded generic message
+---

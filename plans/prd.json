@@ -90,7 +90,7 @@
       "Show the right error message, based on what exception is saying",
       "Create a test that checks the error handling for failed agent response"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "bug-002",

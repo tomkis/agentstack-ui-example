@@ -71,11 +71,13 @@ function App() {
           )
         }
       }
-    } catch {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred'
       setMessages(prev =>
         prev.map(m =>
           m.id === agentMessageId
-            ? { ...m, content: 'Error: Failed to get response from agent' }
+            ? { ...m, content: `Error: ${errorMessage}` }
             : m
         )
       )
