@@ -19,3 +19,7 @@ The idea is to demonstrate classical chat interface that would allow to chat wit
 - Vite should setup proxy to avoid CORS problem with the agent (agenstack is running on http://localhost:8334/api/v1/a2a/ID_OF_CHAT_AGENT)
 - Minimalistic UI with chat bubbles, send message and working streaming mechanism
 
+
+## Development rules
+
+- always ensure the repo is fully functional by running `pnpm check` and `pnpm test`

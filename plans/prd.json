@@ -1,1 +1,83 @@
-[]
+[
+  {
+    "id": "chore-001",
+    "category": "chore",
+    "title": "Investigate how Agent Stack SDK work and update local CLAUDE.md",
+    "description": "Read purpose of the project and technical constraints, then look into Agent Stack SDK documentation and update local CLAUDE.md with improtant bits related to how to use SDK in the project.",
+    "steps": [
+      "Read purpose of the project and technical constraints",
+      "Look into Agent Stack SDK documentation",
+      "Update local CLAUDE.md with improtant bits related to how to use SDK in the project",
+      "Focus on LLM extensions, context tokens and basic chat functionality"
+    ],
+    "passes": false
+  },
+  {
+    "id": "chore-002",
+    "category": "chore",
+    "title": "Setup empty Vite project",
+    "description": "Setup empty Vite project with React and TypeScript and proxy to Agent Stack instance",
+    "steps": [
+      "Create empty Vite project with React and TypeScript",
+      "Setup proxy to Agent Stack instance",
+      "Add empty component to display Hello World to use the UI later on"
+    ],
+    "passes": false
+  },
+  {
+    "id": "chore-003",
+    "category": "chore",
+    "title": "Provide pnpm check script to verify the project is fully functional",
+    "description": "Check for typing errors and linting errors",
+    "steps": [
+      "Install eslint",
+      "Add basic eslint config",
+      "Add typing errors check",
+      "Add pnpm check script to verify the project is fully functional - both typing and linting"
+    ],
+    "passes": false
+  },
+  {
+    "id": "chore-004",
+    "category": "chore",
+    "title": "Provide pnpm test that would start E2E tests using Playwright",
+    "description": "Add Playwright to the project and setup empty E2E test that would check if the project is fully functional",
+    "steps": [
+      "Install Playwright",
+      "Add empty Playwright test that can be started and always passes",
+      "Add pnpm test script to start Playwright tests"
+    ],
+    "passes": false
+  },
+  {
+    "id": "feat-001",
+    "category": "feat",
+    "title": "Add minimalistic UI with chat bubbles for agent and user, button to  send message",
+    "description": "The goal of this is to have non-functional UI that would serve as a basis for the future integration with real agent. The implementation is meant to be minimalistic and non-functional, just basic styling and layout.",
+    "steps": [
+      "Install shadcn as UI library",
+      "Create layout for the page",
+      "Add chat bubbles for agent and user",
+      "Add button to send message",
+      "Dont include any logic for sending message, just basic styling and layout",
+      "Add e2e test that tests the behaviour - very simple smoke check"
+    ],
+    "passes": false
+  },
+  {
+    "id": "feat-002",
+    "category": "feat",
+    "title": "Integrate the basic UI with Agent Stack using the SDK",
+    "description": "Create fully funnctional chat interface that allows simple communication with the agent using the SDK. Use existing UI foundation.",
+    "steps": [
+      "Install a2a js SDK",
+      "Install @agentstack/sdk",
+      "Ensure context token is generated correctly",
+      "Ensure LLM extension is resolved correctly",
+      "Pipe the user message to the agent and display the response",
+      "Allow multi turn conversations with the agent",
+      "Implement e2e test that checks the behaviour - basically sending something like Hi and expecting some agent response"
+    ],
+    "passes": false
+  }
+]
