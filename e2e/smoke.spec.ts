@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { ERROR_MESSAGE_PREFIX } from '../src/App';
 
 test('app loads successfully', async ({ page }) => {
   await page.goto('/');
@@ -51,8 +52,19 @@ test('displays actual error message on failure', async ({ page }) => {
   );
   const agentBubble = page.getByTestId('chat-bubble-agent');
   await expect(agentBubble).toBeVisible({ timeout: 10000 });
-  await expect(agentBubble).toContainText('Error:');
+  await expect(agentBubble).toContainText(ERROR_MESSAGE_PREFIX);
   await expect(agentBubble).not.toContainText(
     'Failed to get response from agent'
   );
+});
+
+test('agent response does not contain error prefix', async ({ page }) => {
+  await page.goto('/');
+  await page.getByTestId('chat-input').fill('Say hello');
+  await page.getByTestId('send-button').click();
+  await expect(page.getByTestId('chat-bubble-user')).toContainText('Say hello');
+  const agentBubble = page.getByTestId('chat-bubble-agent');
+  await expect(agentBubble).toBeVisible({ timeout: 30000 });
+  await expect(agentBubble).not.toBeEmpty({ timeout: 30000 });
+  await expect(agentBubble).not.toContainText(ERROR_MESSAGE_PREFIX);
 });

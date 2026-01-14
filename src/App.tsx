@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { sendMessage } from '@/services/agent';
 
+export const ERROR_MESSAGE_PREFIX = '[AGENT_ERROR]:';
+
 interface Message {
   id: string;
   role: 'user' | 'agent';
@@ -75,7 +77,7 @@ function App() {
       setMessages((prev) =>
         prev.map((m) =>
           m.id === agentMessageId
-            ? { ...m, content: `Error: ${errorMessage}` }
+            ? { ...m, content: `${ERROR_MESSAGE_PREFIX} ${errorMessage}` }
             : m
         )
       );

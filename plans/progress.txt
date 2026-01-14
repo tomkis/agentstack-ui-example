@@ -109,3 +109,13 @@
   - Prettier config: semi, singleQuote, tabWidth:2, trailingComma:es5
   - Fixed syntax error in prd.json (stray comma after string)
 ---
+
+## 2026-01-14 - chore-006
+- What was implemented: E2E test to verify agent doesn't respond with error, using specific error prefix
+- Files changed: src/App.tsx, e2e/smoke.spec.ts
+- **Learnings:**
+  - Exported `ERROR_MESSAGE_PREFIX` const from App.tsx to share between app and tests
+  - Import from `../src/App` works in Playwright tests (relative to e2e folder)
+  - Test currently fails as expected (agent not running) - validates the test catches real errors
+  - Prefix format `[AGENT_ERROR]:` is distinctive and unlikely to appear in normal responses
+---

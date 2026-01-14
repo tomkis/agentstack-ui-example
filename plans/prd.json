@@ -134,6 +134,6 @@
       "Create new E2E test that would test that agent didnt respond with error",
       "It's ok to fail the test, we'll fix it later."
     ],
-    "passes": false
+    "passes": true
   }
 ]
