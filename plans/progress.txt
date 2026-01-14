@@ -40,3 +40,17 @@
   - webServer.reuseExistingServer=!process.env.CI allows reusing running dev server locally
   - Script: `test` runs `playwright test`
 ---
+
+## 2026-01-14 - feat-001
+- What was implemented: Minimalistic chat UI with shadcn components, chat bubbles, input, send button
+- Files changed: vite.config.ts, tsconfig.json, src/index.css, src/main.tsx, src/App.tsx, src/lib/utils.ts, src/components/ui/button.tsx, src/components/ui/input.tsx, src/components/ui/card.tsx, e2e/smoke.spec.ts, package.json
+- **Learnings:**
+  - Shadcn requires Tailwind CSS v4 via @tailwindcss/vite plugin
+  - Shadcn init needs baseUrl and paths alias in tsconfig.json (@/* -> ./src/*)
+  - Vite also needs resolve.alias config for @ path
+  - @types/node needed for path import in vite.config.ts
+  - Shadcn init generates src/lib/utils.ts with cn() helper (clsx + tailwind-merge)
+  - shadcn add button input card installs components with their dependencies
+  - data-testid attributes useful for e2e testing with Playwright
+  - ChatBubble component uses cn() for conditional styling (user right-aligned, agent left-aligned)
+---

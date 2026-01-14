@@ -62,7 +62,7 @@
       "Dont include any logic for sending message, just basic styling and layout",
       "Add e2e test that tests the behaviour - very simple smoke check"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "feat-002",
