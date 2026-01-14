@@ -110,5 +110,29 @@
     "description": "Metadata are send on whole message, they should be on the message itself.",
     "steps": ["Pass metadata on the message itself, not on the whole message"],
     "passes": true
+  },
+  {
+    "id": "chore-005",
+    "category": "chore",
+    "title": "Add prettier config and setup prettier to format the code",
+    "description": "Add prettier config and setup prettier to format the code to ensure consistency.",
+    "steps": [
+      "Add prettier config",
+      "Setup prettier to format the code",
+      "Make sure eslint fails when code is not formatted with prettier",.
+      "Add fix script in pnpm to format the code"
+    ],
+    "passes": true
+  },
+  {
+    "id": "chore-006",
+    "category": "chore",
+    "title": "Add E2E test that would test that agent didnt respond with error",
+    "description": "The test should send a message and expect that agent responds with message that does not start with specific prefix that is used for handling errors in the code",
+    "steps": [
+      "Catching error in sending message should append error message with specific prefix format to easily check in test",
+      "Create new E2E test that would test that agent didnt respond with error"
+    ],
+    "passes": false
   }
 ]
