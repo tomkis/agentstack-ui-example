@@ -145,6 +145,6 @@
       "Use window.location.origin instead of hardcoded /api",
       "Fix the e2e smoke test"
     ],
-    "passes": false
+    "passes": true
   }
 ]

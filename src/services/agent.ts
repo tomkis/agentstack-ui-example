@@ -7,8 +7,11 @@ import {
 import { ClientFactory, type Client } from '@a2a-js/sdk/client';
 import type { Message, TaskArtifactUpdateEvent } from '@a2a-js/sdk';
 
-const API_BASE_URL = '/api';
 const CHAT_AGENT_ID = '2158c059-e10a-4c85-aece-a33c15e52fd6';
+
+function getApiBaseUrl(): string {
+  return `${window.location.origin}/api`;
+}
 
 interface AgentSetup {
   client: Client;
@@ -20,9 +23,10 @@ let agentSetup: AgentSetup | null = null;
 export async function initializeAgent(): Promise<AgentSetup> {
   if (agentSetup) return agentSetup;
 
-  const api = buildApiClient({ baseUrl: API_BASE_URL });
+  const apiBaseUrl = getApiBaseUrl();
+  const api = buildApiClient({ baseUrl: apiBaseUrl });
 
-  const agentUrl = `${API_BASE_URL}/v1/a2a/${CHAT_AGENT_ID}`;
+  const agentUrl = `${apiBaseUrl}/v1/a2a/${CHAT_AGENT_ID}`;
 
   const factory = new ClientFactory();
   const client = await factory.createFromUrl(agentUrl);

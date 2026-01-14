@@ -119,3 +119,13 @@
   - Test currently fails as expected (agent not running) - validates the test catches real errors
   - Prefix format `[AGENT_ERROR]:` is distinctive and unlikely to appear in normal responses
 ---
+
+## 2026-01-14 - bug-004
+- What was implemented: Fixed invalid base URL by using window.location.origin
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - `buildApiClient({ baseUrl })` requires absolute URL, relative `/api` causes URL constructor error
+  - Changed from constant `API_BASE_URL = '/api'` to function `getApiBaseUrl()` returning `${window.location.origin}/api`
+  - E2E tests pass (5/6), one expected failure from chore-006 is unrelated (agent not running)
+  - The URL is now correctly constructed as `http://localhost:5173/api/v1/a2a/AGENT_ID`
+---
