@@ -30,3 +30,13 @@
   - Scripts: `typecheck` (tsc --noEmit), `lint` (eslint .), `check` (both)
   - Plugins: react-hooks, react-refresh for React best practices
 ---
+
+## 2026-01-14 - chore-004
+- What was implemented: Playwright E2E test setup with pnpm test script
+- Files changed: playwright.config.ts, e2e/smoke.spec.ts, package.json
+- **Learnings:**
+  - Playwright config uses defineConfig with webServer to auto-start dev server
+  - Tests in e2e/ directory, config uses chromium project only for simplicity
+  - webServer.reuseExistingServer=!process.env.CI allows reusing running dev server locally
+  - Script: `test` runs `playwright test`
+---

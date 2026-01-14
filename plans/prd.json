@@ -47,7 +47,7 @@
       "Add empty Playwright test that can be started and always passes",
       "Add pnpm test script to start Playwright tests"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "feat-001",
