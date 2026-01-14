@@ -146,5 +146,16 @@
       "Fix the e2e smoke test"
     ],
     "passes": true
+  },
+  {
+    "id": "bug-005",
+    "category": "bug",
+    "title": "Fix failing E2E test",
+    "description": "The agent is not responding with a message in the bubble. It's empty text.",
+    "steps": [
+      "Fix the e2e test",
+      "Ensure that kind status-update is handled correctly"
+    ],
+    "passes": false
   }
 ]
