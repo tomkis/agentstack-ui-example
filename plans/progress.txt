@@ -149,3 +149,12 @@
   - The `contextId` connects message to the workspace where token permissions apply
   - AgentSetup interface extended to cache contextId alongside client and metadata
 ---
+
+## 2026-01-14 - bug-006
+- What was implemented: Fixed streaming content concatenation in App.tsx
+- Files changed: src/App.tsx
+- **Learnings:**
+  - When updating state with streamed text, must append to existing content: `m.content + event.text`
+  - Previous code replaced content entirely with each chunk: `content: event.text`
+  - React setState callback gets current state, allowing proper concatenation in functional update
+---

@@ -66,7 +66,9 @@ function App() {
         if (event.type === 'text') {
           setMessages((prev) =>
             prev.map((m) =>
-              m.id === agentMessageId ? { ...m, content: event.text } : m
+              m.id === agentMessageId
+                ? { ...m, content: m.content + event.text }
+                : m
             )
           );
         }

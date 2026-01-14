@@ -176,6 +176,6 @@
       "Concatenate the streamed content properly",
       "Render accumulated content as it is streamed"
     ],
-    "passes": false
+    "passes": true
   }
 ]
