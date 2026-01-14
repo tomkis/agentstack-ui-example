@@ -10,7 +10,7 @@ import type { Message, TaskArtifactUpdateEvent } from '@a2a-js/sdk';
 const CHAT_AGENT_ID = '2158c059-e10a-4c85-aece-a33c15e52fd6';
 
 function getApiBaseUrl(): string {
-  return `${window.location.origin}/api`;
+  return `${window.location.origin}`;
 }
 
 interface AgentSetup {
@@ -26,7 +26,7 @@ export async function initializeAgent(): Promise<AgentSetup> {
   const apiBaseUrl = getApiBaseUrl();
   const api = buildApiClient({ baseUrl: apiBaseUrl });
 
-  const agentUrl = `${apiBaseUrl}/v1/a2a/${CHAT_AGENT_ID}`;
+  const agentUrl = `${apiBaseUrl}/api/v1/a2a/${CHAT_AGENT_ID}/agent-card.json`;
 
   const factory = new ClientFactory();
   const client = await factory.createFromUrl(agentUrl);
@@ -43,6 +43,7 @@ export async function initializeAgent(): Promise<AgentSetup> {
 
   const fulfillments: Partial<Fulfillments> = {
     getContextToken: () => token,
+    oauthRedirectUri: () => null,
   };
 
   if (demands.llmDemands) {
