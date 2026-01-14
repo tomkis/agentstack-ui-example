@@ -22,7 +22,7 @@
       "Setup proxy to Agent Stack instance",
       "Add empty component to display Hello World to use the UI later on"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "chore-003",

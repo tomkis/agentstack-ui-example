@@ -10,3 +10,13 @@
   - Context token grants permissions for LLM, files, A2A proxy access
   - AgentStack runs on port 8334 by default, A2A endpoint at `/api/v1/a2a/AGENT_ID`
 ---
+
+## 2026-01-14 - chore-002
+- What was implemented: Setup empty Vite project with React, TypeScript, proxy config
+- Files changed: vite.config.ts, tsconfig.json, index.html, src/main.tsx, src/App.tsx, src/vite-env.d.ts, package.json
+- **Learnings:**
+  - Vite proxy configured in server.proxy config, proxies /api/* to localhost:8334
+  - Project uses ESM (type: module in package.json)
+  - Build script: `tsc && vite build` for type checking before build
+  - App.tsx displays Hello World as placeholder for future chat UI
+---
