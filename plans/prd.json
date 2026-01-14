@@ -2,11 +2,11 @@
   {
     "id": "chore-001",
     "category": "chore",
-    "title": "Investigate how Agent Stack SDK work and update local CLAUDE.md",
-    "description": "Read purpose of the project and technical constraints, then look into Agent Stack SDK documentation and update local CLAUDE.md with improtant bits related to how to use SDK in the project.",
+    "title": "Read documentation of Agent Stack and update local CLAUDE.md",
+    "description": "Look into Agent Stack SDK documentation and update local CLAUDE.md with improtant bits related to how to use SDK in the project. Be concise and pick only important bits that are relevant.",
     "steps": [
       "Read purpose of the project and technical constraints",
-      "Look into Agent Stack SDK documentation",
+      "Read Agent Stack SDK documentation",
       "Update local CLAUDE.md with improtant bits related to how to use SDK in the project",
       "Focus on LLM extensions, context tokens and basic chat functionality"
     ],
