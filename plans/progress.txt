@@ -129,3 +129,13 @@
   - E2E tests pass (5/6), one expected failure from chore-006 is unrelated (agent not running)
   - The URL is now correctly constructed as `http://localhost:5173/api/v1/a2a/AGENT_ID`
 ---
+
+## 2026-01-14 - bug-005
+- What was implemented: Fixed empty agent response by handling status-update events
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - A2A streaming sends 3 event types: `artifact-update`, `message`, and `status-update`
+  - Agent responses can come via `status-update` events with `status.message.parts` containing text
+  - The `TaskStatusUpdateEvent` type has nested structure: `event.status.message.parts[]`
+  - All 6 E2E tests now pass including "agent responds to message" and error detection tests
+---

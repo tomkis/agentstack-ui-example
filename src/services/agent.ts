@@ -5,7 +5,11 @@ import {
   type Fulfillments,
 } from 'agentstack-sdk';
 import { ClientFactory, type Client } from '@a2a-js/sdk/client';
-import type { Message, TaskArtifactUpdateEvent } from '@a2a-js/sdk';
+import type {
+  Message,
+  TaskArtifactUpdateEvent,
+  TaskStatusUpdateEvent,
+} from '@a2a-js/sdk';
 
 const CHAT_AGENT_ID = '2158c059-e10a-4c85-aece-a33c15e52fd6';
 
@@ -74,6 +78,15 @@ function isMessage(event: unknown): event is Message {
   );
 }
 
+function isStatusUpdate(event: unknown): event is TaskStatusUpdateEvent {
+  return (
+    typeof event === 'object' &&
+    event !== null &&
+    'kind' in event &&
+    (event as { kind: string }).kind === 'status-update'
+  );
+}
+
 export async function* sendMessage(
   content: string
 ): AsyncGenerator<{ type: 'text'; text: string } | { type: 'done' }> {
@@ -99,6 +112,13 @@ export async function* sendMessage(
     }
     if (isMessage(event) && event.parts) {
       for (const part of event.parts) {
+        if (part.kind === 'text') {
+          yield { type: 'text', text: part.text };
+        }
+      }
+    }
+    if (isStatusUpdate(event) && event.status?.message?.parts) {
+      for (const part of event.status.message.parts) {
         if (part.kind === 'text') {
           yield { type: 'text', text: part.text };
         }

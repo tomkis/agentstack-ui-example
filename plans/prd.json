@@ -156,6 +156,6 @@
       "Fix the e2e test",
       "Ensure that kind status-update is handled correctly"
     ],
-    "passes": false
+    "passes": true
   }
 ]
