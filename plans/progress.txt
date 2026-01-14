@@ -54,3 +54,17 @@
   - data-testid attributes useful for e2e testing with Playwright
   - ChatBubble component uses cn() for conditional styling (user right-aligned, agent left-aligned)
 ---
+
+## 2026-01-14 - feat-002
+- What was implemented: Full agent integration with SDK, streaming messages, context token, LLM extension
+- Files changed: src/services/agent.ts (new), src/App.tsx, e2e/smoke.spec.ts, package.json
+- **Learnings:**
+  - `@a2a-js/sdk/client` exports ClientFactory and Client types (not main package)
+  - `client.getAgentCard()` returns Promise, needs await
+  - `handleAgentCard()` returns demands object with llmDemands, not just llm
+  - Fulfillments requires `getContextToken` function that returns the token object
+  - Stream events are `Message | Task | TaskStatusUpdateEvent | TaskArtifactUpdateEvent`
+  - Need type guards to check event.kind for proper handling
+  - Response text comes from either artifact-update events or final message
+  - E2E test needs longer timeout (30s) for agent response
+---

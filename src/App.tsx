@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { sendMessage } from '@/services/agent'
 
 interface Message {
   id: string
@@ -18,7 +19,7 @@ function ChatBubble({ message }: { message: Message }) {
     >
       <div
         className={cn(
-          'max-w-[70%] rounded-lg px-4 py-2',
+          'max-w-[70%] rounded-lg px-4 py-2 whitespace-pre-wrap',
           isUser
             ? 'bg-primary text-primary-foreground'
             : 'bg-muted text-muted-foreground'
@@ -31,20 +32,56 @@ function ChatBubble({ message }: { message: Message }) {
 }
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([
-    { id: '1', role: 'agent', content: 'Hello! How can I help you today?' }
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return
-    const newMessage: Message = {
-      id: Date.now().toString(),
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  const handleSend = async () => {
+    if (!inputValue.trim() || isLoading) return
+
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
       role: 'user',
       content: inputValue.trim()
     }
-    setMessages(prev => [...prev, newMessage])
+    setMessages(prev => [...prev, userMessage])
     setInputValue('')
+    setIsLoading(true)
+
+    const agentMessageId = crypto.randomUUID()
+    setMessages(prev => [
+      ...prev,
+      { id: agentMessageId, role: 'agent', content: '' }
+    ])
+
+    try {
+      for await (const event of sendMessage(userMessage.content)) {
+        if (event.type === 'text') {
+          setMessages(prev =>
+            prev.map(m =>
+              m.id === agentMessageId
+                ? { ...m, content: event.text }
+                : m
+            )
+          )
+        }
+      }
+    } catch {
+      setMessages(prev =>
+        prev.map(m =>
+          m.id === agentMessageId
+            ? { ...m, content: 'Error: Failed to get response from agent' }
+            : m
+        )
+      )
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -64,6 +101,7 @@ function App() {
           {messages.map(message => (
             <ChatBubble key={message.id} message={message} />
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </main>
       <footer className="border-t p-4">
@@ -73,10 +111,15 @@ function App() {
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
+            disabled={isLoading}
             data-testid="chat-input"
           />
-          <Button onClick={handleSend} data-testid="send-button">
-            Send
+          <Button
+            onClick={handleSend}
+            disabled={isLoading}
+            data-testid="send-button"
+          >
+            {isLoading ? 'Sending...' : 'Send'}
           </Button>
         </div>
       </footer>

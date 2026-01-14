@@ -78,6 +78,6 @@
       "Allow multi turn conversations with the agent",
       "Implement e2e test that checks the behaviour - basically sending something like Hi and expecting some agent response"
     ],
-    "passes": false
+    "passes": true
   }
 ]
