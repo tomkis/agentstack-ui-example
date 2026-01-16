@@ -177,5 +177,35 @@
       "Render accumulated content as it is streamed"
     ],
     "passes": true
+  },
+  {
+    "id": "feat-003",
+    "category": "feat",
+    "title": "Add support to select agent ID before starting the chat",
+    "description": "Currently the Agent ID is hardcoded in the code. Before starting the chat we want user to provide agent ID.",
+    "steps": [
+      "Visiting the page should not show the chat but rather an screen with input for agent ID",
+      "Providing agent ID can be done through a input field with a button",
+      "Provide some default text introducing the user to the page and what they should do",
+      "Once ID is provided move on to the chat and set the agent ID in the state so that agent is initialized with the correct ID"
+    ],
+    "passes": false
+  },
+  {
+    "id": "feat-004",
+    "category": "feat",
+    "title": "Add support for agents that require initial form as input to the agent",
+    "description": "Some agents require initial form as input to the agent. We want to support this by letting the user fill in the form instead of just sending the message.",
+    "steps": [
+      "Investigate how form extension in Agent Stack works",
+      "Figure out whether the agent requires initial form as input to the agent",
+      "Instead of showing chat interface, show the form interface to submit if the agent requires it",
+      "The form should work with simple text input, date inputs, checkboxes, radio buttons, dropdowns, file uploads",
+      "The form should be validated before submitting",
+      "Submitting the form should leverage the form extension in the agent stack",
+      "Once form submitted, the agent view can change to traditional chat interface, where first message is the summary of the form submission",
+      "Add E2E test that checks the behaviour. There is existing form agent with a9b589ae-ac6d-bcf2-2eaa-628ad2fb7e07 id"
+    ],
+    "passes": false
   }
 ]
