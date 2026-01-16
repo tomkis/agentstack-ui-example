@@ -1,0 +1,160 @@
+## 2026-01-14 - chore-001
+- What was implemented: Added AgentStack SDK reference documentation to CLAUDE.md
+- Files changed: .claude/CLAUDE.md
+- **Learnings:**
+  - SDK package is `agentstack-sdk` (not @agentstack/sdk), depends on `@a2a-js/sdk`
+  - Core functions: `buildApiClient`, `handleAgentCard`, `buildLLMExtensionFulfillmentResolver`
+  - A2A client uses `ClientFactory.createFromUrl()` for agent connection
+  - Streaming via `sendMessageStream()` returns async iterator with status-update/artifact-update events
+  - Extension pattern: agent declares demands in card, client fulfills via dependency injection
+  - Context token grants permissions for LLM, files, A2A proxy access
+  - AgentStack runs on port 8334 by default, A2A endpoint at `/api/v1/a2a/AGENT_ID`
+---
+
+## 2026-01-14 - chore-002
+- What was implemented: Setup empty Vite project with React, TypeScript, proxy config
+- Files changed: vite.config.ts, tsconfig.json, index.html, src/main.tsx, src/App.tsx, src/vite-env.d.ts, package.json
+- **Learnings:**
+  - Vite proxy configured in server.proxy config, proxies /api/* to localhost:8334
+  - Project uses ESM (type: module in package.json)
+  - Build script: `tsc && vite build` for type checking before build
+  - App.tsx displays Hello World as placeholder for future chat UI
+---
+
+## 2026-01-14 - chore-003
+- What was implemented: ESLint setup with React/TS plugins, pnpm check script
+- Files changed: eslint.config.js, package.json
+- **Learnings:**
+  - ESLint 9 uses flat config (eslint.config.js)
+  - typescript-eslint provides tseslint.config() helper for composing configs
+  - Scripts: `typecheck` (tsc --noEmit), `lint` (eslint .), `check` (both)
+  - Plugins: react-hooks, react-refresh for React best practices
+---
+
+## 2026-01-14 - chore-004
+- What was implemented: Playwright E2E test setup with pnpm test script
+- Files changed: playwright.config.ts, e2e/smoke.spec.ts, package.json
+- **Learnings:**
+  - Playwright config uses defineConfig with webServer to auto-start dev server
+  - Tests in e2e/ directory, config uses chromium project only for simplicity
+  - webServer.reuseExistingServer=!process.env.CI allows reusing running dev server locally
+  - Script: `test` runs `playwright test`
+---
+
+## 2026-01-14 - feat-001
+- What was implemented: Minimalistic chat UI with shadcn components, chat bubbles, input, send button
+- Files changed: vite.config.ts, tsconfig.json, src/index.css, src/main.tsx, src/App.tsx, src/lib/utils.ts, src/components/ui/button.tsx, src/components/ui/input.tsx, src/components/ui/card.tsx, e2e/smoke.spec.ts, package.json
+- **Learnings:**
+  - Shadcn requires Tailwind CSS v4 via @tailwindcss/vite plugin
+  - Shadcn init needs baseUrl and paths alias in tsconfig.json (@/* -> ./src/*)
+  - Vite also needs resolve.alias config for @ path
+  - @types/node needed for path import in vite.config.ts
+  - Shadcn init generates src/lib/utils.ts with cn() helper (clsx + tailwind-merge)
+  - shadcn add button input card installs components with their dependencies
+  - data-testid attributes useful for e2e testing with Playwright
+  - ChatBubble component uses cn() for conditional styling (user right-aligned, agent left-aligned)
+---
+
+## 2026-01-14 - feat-002
+- What was implemented: Full agent integration with SDK, streaming messages, context token, LLM extension
+- Files changed: src/services/agent.ts (new), src/App.tsx, e2e/smoke.spec.ts, package.json
+- **Learnings:**
+  - `@a2a-js/sdk/client` exports ClientFactory and Client types (not main package)
+  - `client.getAgentCard()` returns Promise, needs await
+  - `handleAgentCard()` returns demands object with llmDemands, not just llm
+  - Fulfillments requires `getContextToken` function that returns the token object
+  - Stream events are `Message | Task | TaskStatusUpdateEvent | TaskArtifactUpdateEvent`
+  - Need type guards to check event.kind for proper handling
+  - Response text comes from either artifact-update events or final message
+  - E2E test needs longer timeout (30s) for agent response
+---
+
+## 2026-01-14 - bug-002
+- What was implemented: Fixed agent URL to use correct UUID instead of 'chat'
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - Agent ID must be the actual UUID (2158c059-e10a-4c85-aece-a33c15e52fd6), not a placeholder
+  - Module-level singleton caching in agent.ts persists across Playwright tests when reuseExistingServer=true
+  - Cannot easily test network interception for cached requests in parallel tests
+  - Existing "agent responds to message" test validates URL correctness (agent wouldn't respond with wrong URL)
+---
+
+## 2026-01-14 - bug-003
+- What was implemented: Fixed metadata passing - moved from sendMessageStream params to Message object
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - A2A Message interface has `metadata` property directly on the message object
+  - `sendMessageStream({ message, metadata })` is wrong - metadata must be in `message.metadata`
+  - Correct: `sendMessageStream({ message })` where message includes `metadata` property
+  - Existing e2e test validates correct metadata passing (agent needs LLM extension to respond)
+---
+
+## 2026-01-14 - bug-001
+- What was implemented: Fixed error handling to display actual error message instead of generic one
+- Files changed: src/App.tsx, e2e/smoke.spec.ts
+- **Learnings:**
+  - Catch clause should capture error variable and extract message from Error instance
+  - Playwright `page.route()` can intercept and mock API responses for error testing
+  - Test verifies error message is displayed and is NOT the hardcoded generic message
+---
+
+## 2026-01-14 - chore-005
+- What was implemented: Prettier config with ESLint integration, pnpm fix script
+- Files changed: .prettierrc (new), .prettierignore (new), eslint.config.js, package.json
+- **Learnings:**
+  - `eslint-plugin-prettier` runs prettier as ESLint rule via `prettier/prettier: error`
+  - `eslint-config-prettier` disables ESLint rules that conflict with Prettier (add last in config)
+  - ESLint 9 flat config imports plugins as default exports, not named
+  - `.prettierignore` needed to skip dist, node_modules, pnpm-lock.yaml
+  - Prettier config: semi, singleQuote, tabWidth:2, trailingComma:es5
+  - Fixed syntax error in prd.json (stray comma after string)
+---
+
+## 2026-01-14 - chore-006
+- What was implemented: E2E test to verify agent doesn't respond with error, using specific error prefix
+- Files changed: src/App.tsx, e2e/smoke.spec.ts
+- **Learnings:**
+  - Exported `ERROR_MESSAGE_PREFIX` const from App.tsx to share between app and tests
+  - Import from `../src/App` works in Playwright tests (relative to e2e folder)
+  - Test currently fails as expected (agent not running) - validates the test catches real errors
+  - Prefix format `[AGENT_ERROR]:` is distinctive and unlikely to appear in normal responses
+---
+
+## 2026-01-14 - bug-004
+- What was implemented: Fixed invalid base URL by using window.location.origin
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - `buildApiClient({ baseUrl })` requires absolute URL, relative `/api` causes URL constructor error
+  - Changed from constant `API_BASE_URL = '/api'` to function `getApiBaseUrl()` returning `${window.location.origin}/api`
+  - E2E tests pass (5/6), one expected failure from chore-006 is unrelated (agent not running)
+  - The URL is now correctly constructed as `http://localhost:5173/api/v1/a2a/AGENT_ID`
+---
+
+## 2026-01-14 - bug-005
+- What was implemented: Fixed empty agent response by handling status-update events
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - A2A streaming sends 3 event types: `artifact-update`, `message`, and `status-update`
+  - Agent responses can come via `status-update` events with `status.message.parts` containing text
+  - The `TaskStatusUpdateEvent` type has nested structure: `event.status.message.parts[]`
+  - All 6 E2E tests now pass including "agent responds to message" and error detection tests
+---
+
+## 2026-01-14 - bug-007
+- What was implemented: Added context ID to A2A message for proper agent workspace association
+- Files changed: src/services/agent.ts
+- **Learnings:**
+  - A2A Message interface has `contextId` property that must be set for agent to access context resources
+  - Context is created via `api.createContext(agentId)` and returns object with `id` property
+  - The `contextId` connects message to the workspace where token permissions apply
+  - AgentSetup interface extended to cache contextId alongside client and metadata
+---
+
+## 2026-01-14 - bug-006
+- What was implemented: Fixed streaming content concatenation in App.tsx
+- Files changed: src/App.tsx
+- **Learnings:**
+  - When updating state with streamed text, must append to existing content: `m.content + event.text`
+  - Previous code replaced content entirely with each chunk: `content: event.text`
+  - React setState callback gets current state, allowing proper concatenation in functional update
+---

@@ -21,10 +21,12 @@ If while implementing the feature, you notice PRD is complete, output <promise>C
 APPEND to progress.txt:
 
 ## [Date] - [Task ID]
+
 - What was implemented
 - Files changed
 - **Learnings:**
   - Patterns discovered
   - Gotchas encountered
   - Proposed things to follow up with
+
 ---
